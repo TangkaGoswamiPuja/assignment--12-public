@@ -28,7 +28,9 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    const testCollection = client.db ("doctorDoctor").collection('allTest')
+    const testCollection = client.db ("doctorDoctor").collection('allTest');
+    const slotsCollection = client.db ("doctorDoctor").collection('slots');
+
 
    
     app.get("/allTest",async(req,res)=>{
@@ -41,6 +43,14 @@ async function run() {
         const query = {_id: new ObjectId(id)};
     const result= await testCollection.findOne(query);
     res.send(result);
+    })
+
+    // slots 
+
+    app.post('/slots',async(req,res)=>{
+      const slotItem = req.body;
+      const result= await slotsCollection.insertOne(slotItem);
+      res.send(result)
     })
 
     // Send a ping to confirm a successful connection
