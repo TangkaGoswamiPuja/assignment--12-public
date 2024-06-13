@@ -46,7 +46,11 @@ async function run() {
     })
 
     // slots 
-
+    app.get("/slots",async(req,res)=>{
+      const result = await
+      slotsCollection.find().toArray();
+      res.send(result);
+    });
     app.post('/slots',async(req,res)=>{
       const slotItem = req.body;
       const result= await slotsCollection.insertOne(slotItem);
