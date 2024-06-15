@@ -47,8 +47,10 @@ async function run() {
 
     // slots 
     app.get('/slots',async(req,res)=>{
+      const email = req.query.email;
+      const query = {email : email };
       const result = await
-      slotsCollection.find().toArray();
+      slotsCollection.find(query).toArray();
       res.send(result);
     });
     app.post('/slots',async(req,res)=>{
