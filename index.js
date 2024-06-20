@@ -58,6 +58,12 @@ async function run() {
       const result= await slotsCollection.insertOne(slotItem);
       res.send(result)
     })
+    app.delete('/slots/:id' ,async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+  const result= await slotsCollection.deleteOne(query);
+  res.send(result);
+  })
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
