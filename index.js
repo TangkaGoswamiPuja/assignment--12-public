@@ -137,18 +137,40 @@ async function run() {
       res.send(result)
     })
 
+    app.patch('/alltest/:id',async (req, res) => {
+      const item = req.body;
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          title: item.title,
+        short_description:item.short_description,
+price :item.price,
+date:item.date,
+time:item.time,
+slots:item.slots,
+image :item.image
+        }
+      }
+      const result = await testCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
+
     app.get('/alltest/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await testCollection.findOne(query);
       res.send(result);
-    })
+    });
+
     app.delete('/alltest/:id',verifyToken,verifyAdmin, async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await testCollection.deleteOne(query);
       res.send(result);
-    })
+    });
+
+
 
     // slots 
     app.get('/slots', async (req, res) => {
