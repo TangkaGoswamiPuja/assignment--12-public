@@ -130,11 +130,23 @@ async function run() {
       const result = await
         testCollection.find().toArray();
       res.send(result);
+    });
+    app.post('/alltest',verifyToken,verifyAdmin, async (req, res) => {
+      const testItem = req.body;
+      const result = await testCollection.insertOne(testItem);
+      res.send(result)
     })
+
     app.get('/alltest/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await testCollection.findOne(query);
+      res.send(result);
+    })
+    app.delete('/alltest/:id',verifyToken,verifyAdmin, async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await testCollection.deleteOne(query);
       res.send(result);
     })
 
